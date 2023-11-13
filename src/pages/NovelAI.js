@@ -143,13 +143,21 @@ export default function NovelAI() {
       const response = await fetch('http://localhost:8080/api/v1/novels/ai',{
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json; charset=utf-8'
         },
         body: JSON.stringify(requestData),
       });
 
       const data = await response.json();
       console.log(data);
+
+      if (data && data.result && data.result.story) {
+        // 내부 JSON 파싱
+        const innerJson = JSON.parse(data.result.story);
+        if (innerJson && innerJson.story) {
+          setMessages(prevMessages => [...prevMessages, { text: innerJson.story, sender: "chatbot" }]);
+        }
+      }
     } catch (error) {
       console.error('Error', error);
     }
