@@ -153,9 +153,11 @@ export default function NovelAI() {
       console.log(data);
 
       if (data && data.result && data.result.story) {
+
         const innerJson = JSON.parse(data.result.story);
         if (innerJson && innerJson.story) {
           setMessages(prevMessages => [...prevMessages, { text: innerJson.story, sender: "NovelAI" }]);
+
         }
       }
     } catch (error) {
