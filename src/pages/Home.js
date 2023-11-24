@@ -21,13 +21,15 @@ import Couple3 from "../images/커플3.png";
 import Prince1 from "../images/왕자2.png";
 import Prince2 from "../images/왕자3.png";
 import Soccer1 from "../images/축구하는남자.png";
+import body from "../images/body.jpg";
+import logo from "../images/logo_maya.png";
 
 function Copyright() {
   return (
     <Typography variant="body2" color="text.secondary" align="center">
       {"Copyright © "}
       <Link color="inherit" href="/">
-        Dream Shaper
+        Ultimate StoryTelling
       </Link>{" "}
       {new Date().getFullYear()}
       {"."}
@@ -38,47 +40,47 @@ function Copyright() {
 const cards = [
   {
     id: 1,
-    title: "소설1",
+    title:"가짜 공녀가 되어버렸다",
     backgroundImage: `url(${Girl1})`,
   },
   {
     id: 2,
-    title: "소설2",
+    title: "빙의버프 받고 레벨 업",
     backgroundImage: `url(${Girl2})`,
   },
   {
     id: 3,
-    title: "소설3",
+    title: "사랑받는 막내딸도 결혼하고 싶어요.",
     backgroundImage: `url(${Girl3})`,
   },
   {
     id: 4,
-    title: "소설4",
+    title: "쌍둥이 남매로 동시에 빙의했다",
     backgroundImage: `url(${Couple1})`,
   },
   {
     id: 5,
-    title: "소설5",
+    title: "황자의 동생으로 살아남기",
     backgroundImage: `url(${Couple2})`,
   },
   {
     id: 6,
-    title: "소설6",
+    title: "정략결혼의 대가는 나의 모든 것",
     backgroundImage: `url(${Couple3})`,
   },
   {
     id: 7,
-    title: "소설7",
+    title: "폭군 황제가 신부를 찾습니다.",
     backgroundImage: `url(${Prince1})`,
   },
   {
     id: 8,
-    title: "소설8",
+    title: "꿈을 소환하는 소환술사",
     backgroundImage: `url(${Prince2})`,
   },
   {
     id: 9,
-    title: "소설9",
+    title: "단 하나의 도전",
     backgroundImage: `url(${Soccer1})`,
   },
 ];
@@ -99,11 +101,12 @@ export default function Home() {
 
   return (
     <>
-      <main>
+      <div style={{backgroundImage: `url(${body})`}}>
         <Box
           sx={{
-            bgcolor: "background.paper",
+            
             pt: 8,
+            backgroundImage: `url(${logo})`
           }}
         >
           <Container maxWidth="lg"></Container>
@@ -157,7 +160,8 @@ export default function Home() {
         </Container>
         {/* 모달 컴포넌트 */}
         <NovelModal open={isModalOpen} handleClose={closeModal} novel={currentMusic} />
-      </main>
+      </div>
     </>
+
   );
 }

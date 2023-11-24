@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import NovelAI from "./pages/NovelAI";
-import Produce from "./pages/Produce";
+import Main from "./pages/Main";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 
@@ -17,7 +17,7 @@ function App() {
       <CssBaseline />
       <Router>
         <Routes>
-          <Route path="/produce" element={<Produce />} />
+          <Route path="/" element={<Main/> }/>
           <Route path="/novelAi" element={<NovelAI />} />
           <Route path="/novelList" element={<Home />} />
         </Routes>
