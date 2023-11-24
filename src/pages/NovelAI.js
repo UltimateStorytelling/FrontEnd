@@ -57,7 +57,7 @@ const SmartEditor = ({ handleSave }) => {
         variant="contained"
         sx={{ mt: 1, fontSize: '18px', alignSelf: 'flex-end', marginBottom: '16px' }}
         color="primary"
-        onClick={() => handleSave(content)} // 변경된 부분
+        onClick={() => handleSave(content)}
       >
         Save
       </Button>
@@ -104,7 +104,7 @@ const Chatbot = ({ handleSendMessage, messages }) => {
           onKeyDown={(e) => {
             if (e.key === "Enter") {
               handleSendMessage(e.target.value);
-              e.target.value = ""; // 입력창 비우기
+              e.target.value = "";
             }
           }}
         />
@@ -117,7 +117,7 @@ const Chatbot = ({ handleSendMessage, messages }) => {
             const inputValue = document.getElementById("chatInput").value;
             if (inputValue) {
               handleSendMessage(inputValue);
-              document.getElementById("chatInput").value = ""; // 입력창 비우기
+              document.getElementById("chatInput").value = "";
             }
           }}
         >
@@ -132,31 +132,29 @@ export default function NovelAI() {
   const [messages, setMessages] = useState([]);
 
   const handleSendMessage = async (message) => {
-    
-    const requestData = {
-      story: message,  
-    };
-
     setMessages([...messages, { text: message, sender: "user" }]);
     
     try {
-      const response = await fetch('http://localhost:8080/api/v1/novels/ai',{
+      const response = await fetch(`http://localhost:8080/api/v1/novels/ai`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(requestData),
+        body: JSON.stringify({ message }),
       });
 
       const data = await response.json();
       console.log(data);
+
+      if (data && data.message) {
+        setMessages(prevMessages => [...prevMessages, { text: data.message, sender: "chatbot" }]);
+      }
     } catch (error) {
       console.error('Error', error);
     }
   };
-  
+
   const handleSave = (content) => {
-    // 작성한 글을 저장하는 로직을 추가하세요
     console.log("Saving content:", content);
   };
 
