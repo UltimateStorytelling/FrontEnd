@@ -1,44 +1,62 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
 import TextField from '@mui/material/TextField';
 import Button from "@mui/material/Button";
+import * as yup from 'yup';
 import axios from 'axios';
 
-const Main = () => {
-  const [editorHtml, setEditorHtml] = useState('');
-  const [title, setTitle] = useState('');
+const Signup = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-  useEffect(() => {
-    const accessToken = localStorage.getItem('jwtToken');
-    if (accessToken) {
-      axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
-    }
-  }, []);
-  
+  const payload = {
+    email: email,
+    password: password,
+};
 
-  const handleEditorChange = (value) => {
-    setEditorHtml(value);
-  };
 
-  const handleNovelSubmit = () => {
+const handleSignUp = (e) => {
+  console.log("Email:", email);
+  console.log("Password:", password);
 
-    // 소설 등록 API 호출
-    axios.post('http://localhost:8080/api/v1/novels', {
-      novelName: title,
-      novelDetail: editorHtml,
+  const schema = yup.object().shape({
+    email: yup
+      .string()
+      .email('유효한 이메일을 입력해주세요.')
+      .required('이메일을 입력해주세요.'),
+    password: yup
+      .string()
+      .required('비밀번호를 입력해주세요.')
+      .min(8, '비밀번호는 최소 8자 이상이어야 합니다.')
+      .matches(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+        '비밀번호는 영문 대소문자, 숫자, 특수문자를 포함해야 합니다.'
+      ),
+  });
+
+  schema
+    .validate({ email, password })
+    .then(() => {
+      // 비밀번호 유효성 검사 통과
+
+      axios.post('http://localhost:8080/api/v1/members', { memberEmail:email, memberPwd:password })
+        .then(response => {
+          // 회원가입 성공 시 처리 로직
+          alert('회원가입이 완료되었습니다.');
+          // 추가적인 로직 수행
+        })
+        .catch(error => {
+          // 회원가입 실패 시 처리 로직
+          alert(error.response.data.message);
+        });
     })
-    .then(response => {
-      // 소설 등록 성공 시 처리 로직
-      alert('소설이 성공적으로 등록되었습니다.');
-      // 추가적인 로직 수행
-    })
-    .catch(error => {
-      // 소설 등록 실패 시 처리 로직
-      alert(error.response.data.message);
+    .catch((error) => {
+      // 유효성 검사 실패
+      alert(error.message);
     });
-  };
+};
+
+
 
   return (
     <>
@@ -52,11 +70,11 @@ const Main = () => {
             <h4>Navigation</h4>
             <div id="navcontainer">
               <ul id="navlist">
-                <li id="signup">
-                  <Link to="/signup">Sign up</Link>
+                 <li id="signup">
+                    <Link to="/signup">Sign up</Link>
                 </li>
                 <li id="login">
-                  <Link to="/login">Login</Link>
+                    <Link to="/login">Login</Link>
                 </li>
                 <li id="active">
                   <Link to="/" id="current">
@@ -124,20 +142,21 @@ const Main = () => {
           </p>
         </div>
         <div id="content">
-          <h3>소설 작성</h3>
-          <TextField fullWidth margin="normal" id="novelName" label="제목" name="novelName" autoComplete="off" onChange={(e) => setTitle(e.target.value)} />
-          <ReactQuill theme="snow" value={editorHtml} onChange={handleEditorChange} />
-          <Button variant="contained" color="primary" onClick={handleNovelSubmit}>
-           소설 등록
+          <h3>회원가입</h3>
+          <form id="signupForm" onSubmit={handleSignUp}>
+          <TextField fullWidth margin="normal" id="memberEmail" label="이메일" name="email" autoComplete="off" value={email} onChange={(e) => setEmail(e.target.value)} />
+          <TextField fullWidth margin="normal" id="memberPwd" label="비밀번호" name="password" type="password" autoComplete="off" value={password} onChange={(e) => setPassword(e.target.value)} />
+          <Button type="submit" variant="contained" color="primary">
+            회원가입
           </Button>
-            </div>
-            <div id="footer"></div>
-            </div>
-            <link rel="stylesheet" type="text/css" href="/style.css" />
-            <div align="center">
-            </div>
-            </>
-            );
-    };
+          </form>
+        </div>
+        <div id="footer"></div>
+      </div>
+      <link rel="stylesheet" type="text/css" href="/style.css" />
+      <div align="center"></div>
+    </>
+  );
+};
 
-export default Main;
+export default Signup;

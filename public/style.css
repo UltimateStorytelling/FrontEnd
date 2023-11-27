@@ -43,6 +43,12 @@ body {
 	margin-left: 35px;
 }
 
+.header-buttons {
+	display: flex;
+	justify-content: flex-end;
+  }
+  
+
 .left_column_boxes {
 	border: 1px dotted #AA8661!important;
 	border: none;

@@ -27,7 +27,7 @@ const Chatbot = ({ handleSendMessage, messages }) => {
         <div id="sideheader"></div>
         <div id="left_column">
           <div className="left_column_boxes">
-            <h4>Navigation</h4>
+          <h4>Navigation</h4>
             <div id="navcontainer">
               <ul id="navlist">
                 <li id="active">
@@ -39,8 +39,10 @@ const Chatbot = ({ handleSendMessage, messages }) => {
                   <Link to="/novelAI">AI novel</Link>
                 </li>
                 <li>
-                  <Link to="/illustrationAI">AI illustration</Link>
-                </li>
+                <a href="https://0239-221-163-19-218.ngrok-free.app/create-illustration" target="_blank" rel="noopener noreferrer">
+                  AI illustration
+                </a>
+              </li>
               </ul>
             </div>
           </div>
@@ -116,10 +118,6 @@ const Chatbot = ({ handleSendMessage, messages }) => {
             }
           }}
         />
-          {/* 버튼 스타일 수정 */}
-          <label>
-                  <input type="submit" className="submit_button_contact" name="Submit1" value="소설 등록" />
-         </label>
         </div>
         <div id="footer"></div>
       </div>
@@ -141,7 +139,7 @@ export default function NovelAI() {
     setMessages([...messages, { text: message, sender: "user" }]);
 
     try {
-      const response = await fetch('http://192.168.247.134:8080/api/v1/novels/ai', {
+      const response = await fetch('http://localhost:8080/api/v1/novels/ai', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json; charset=utf-8'
