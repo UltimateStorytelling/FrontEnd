@@ -70,12 +70,6 @@ const handleSignUp = (e) => {
             <h4>Navigation</h4>
             <div id="navcontainer">
               <ul id="navlist">
-                 <li id="signup">
-                    <Link to="/signup">Sign up</Link>
-                </li>
-                <li id="login">
-                    <Link to="/login">Login</Link>
-                </li>
                 <li id="active">
                   <Link to="/" id="current">
                     Edit

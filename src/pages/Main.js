@@ -5,10 +5,12 @@ import 'react-quill/dist/quill.snow.css';
 import TextField from '@mui/material/TextField';
 import Button from "@mui/material/Button";
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const Main = () => {
   const [editorHtml, setEditorHtml] = useState('');
   const [title, setTitle] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     const accessToken = localStorage.getItem('jwtToken');
@@ -25,19 +27,10 @@ const Main = () => {
   const handleNovelSubmit = () => {
 
     // 소설 등록 API 호출
-    axios.post('http://localhost:8080/api/v1/novels', {
-      novelName: title,
-      novelDetail: editorHtml,
-    })
-    .then(response => {
-      // 소설 등록 성공 시 처리 로직
-      alert('소설이 성공적으로 등록되었습니다.');
-      // 추가적인 로직 수행
-    })
-    .catch(error => {
-      // 소설 등록 실패 시 처리 로직
-      alert(error.response.data.message);
-    });
+    alert('소설이 작성되었습니다.');
+
+    navigate('/novelAi');
+    
   };
 
   return (
@@ -52,12 +45,6 @@ const Main = () => {
             <h4>Navigation</h4>
             <div id="navcontainer">
               <ul id="navlist">
-                <li id="signup">
-                  <Link to="/signup">Sign up</Link>
-                </li>
-                <li id="login">
-                  <Link to="/login">Login</Link>
-                </li>
                 <li id="active">
                   <Link to="/" id="current">
                     Edit
@@ -65,6 +52,9 @@ const Main = () => {
                 </li>
                 <li>
                   <Link to="/novelAI">AI novel</Link>
+                </li>
+                <li>
+                  <Link to="/novelList">Novel List</Link>
                 </li>
                 <li>
                 <a href="https://0239-221-163-19-218.ngrok-free.app/create-illustration" target="_blank" rel="noopener noreferrer">

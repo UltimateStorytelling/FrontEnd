@@ -39,6 +39,9 @@ const Chatbot = ({ handleSendMessage, messages }) => {
                   <Link to="/novelAI">AI novel</Link>
                 </li>
                 <li>
+                  <Link to="/novelList">Novel List</Link>
+                </li>
+                <li>
                 <a href="https://0239-221-163-19-218.ngrok-free.app/create-illustration" target="_blank" rel="noopener noreferrer">
                   AI illustration
                 </a>
